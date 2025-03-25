@@ -1,0 +1,537 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Computer Science Viva Prep</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+        body {
+            font-family: 'Poppins', sans-serif;
+            background: linear-gradient(135deg, #f0f4f8, #d9e2ec);
+            color: #2d3748;
+            line-height: 1.6;
+        }
+        /* Navbar */
+        .navbar {
+            background: #2b6cb0;
+            padding: 15px 30px;
+            position: fixed;
+            width: 100%;
+            top: 0;
+            z-index: 1000;
+            box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
+        }
+        .navbar h1 {
+            color: #fff;
+            font-size: 24px;
+            display: inline-block;
+        }
+        .nav-links {
+            float: right;
+        }
+        .nav-links a {
+            color: #fff;
+            text-decoration: none;
+            margin-left: 20px;
+            font-weight: 500;
+            transition: color 0.3s;
+        }
+        .nav-links a:hover {
+            color: #bee3f8;
+        }
+        /* Sidebar */
+        .sidebar {
+            width: 250px;
+            background: #1a202c;
+            height: 100vh;
+            position: fixed;
+            top: 60px;
+            padding: 20px;
+            overflow-y: auto;
+            transition: transform 0.3s ease;
+        }
+        .sidebar a {
+            display: block;
+            color: #e2e8f0;
+            text-decoration: none;
+            padding: 12px;
+            margin: 5px 0;
+            border-radius: 8px;
+            transition: background 0.3s, padding-left 0.3s;
+        }
+        .sidebar a:hover, .sidebar a.active {
+            background: #2d3748;
+            padding-left: 20px;
+        }
+        /* Main Content */
+        .main-content {
+            margin-left: 250px;
+            padding: 80px 40px 40px;
+            min-height: 100vh;
+            transition: margin-left 0.3s ease;
+        }
+        .section {
+            background: #fff;
+            padding: 25px;
+            margin-bottom: 20px;
+            border-radius: 12px;
+            box-shadow: 0 4px 20px rgba(0, 0, 0, 0.05);
+            opacity: 0;
+            transform: translateY(30px);
+            animation: fadeIn 0.5s forwards;
+        }
+        @keyframes fadeIn {
+            to { opacity: 1; transform: translateY(0); }
+        }
+        h2 {
+            color: #2b6cb0;
+            font-size: 28px;
+            margin-bottom: 20px;
+            border-bottom: 3px solid #63b3ed;
+            padding-bottom: 8px;
+        }
+        h3 {
+            color: #4a5568;
+            font-size: 20px;
+            margin: 15px 0 10px;
+        }
+        .saq {
+            margin: 15px 0;
+            padding: 15px;
+            background: #f7fafc;
+            border-left: 5px solid #2b6cb0;
+            border-radius: 8px;
+            transition: transform 0.3s, box-shadow 0.3s;
+        }
+        .saq:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 6px 15px rgba(0, 0, 0, 0.1);
+        }
+        .saq strong {
+            color: #e53e3e;
+            font-weight: 600;
+        }
+        pre {
+            background: #1a202c;
+            color: #e2e8f0;
+            padding: 15px;
+            border-radius: 8px;
+            font-family: 'Fira Code', monospace;
+            overflow-x: auto;
+        }
+        /* Table */
+        table {
+            width: 100%;
+            border-collapse: collapse;
+            margin-top: 20px;
+            background: #fff;
+            border-radius: 12px;
+            overflow: hidden;
+        }
+        th, td {
+            padding: 12px;
+            text-align: left;
+            border-bottom: 1px solid #e2e8f0;
+        }
+        th {
+            background: #2b6cb0;
+            color: #fff;
+            font-weight: 600;
+        }
+        tr:nth-child(even) {
+            background: #f7fafc;
+        }
+        tr:hover {
+            background: #edf2f7;
+        }
+        /* Generate Questions Section */
+        #generate-questions .saq {
+            background: #fefcbf;
+            border-left-color: #d69e2e;
+        }
+        #generate-btn {
+            background: #d69e2e;
+            color: #fff;
+            border: none;
+            padding: 10px 20px;
+            border-radius: 8px;
+            cursor: pointer;
+            font-weight: 600;
+            transition: background 0.3s;
+        }
+        #generate-btn:hover {
+            background: #b7791f;
+        }
+        /* Responsive */
+        .toggle-btn {
+            display: none;
+            position: fixed;
+            top: 15px;
+            left: 15px;
+            font-size: 24px;
+            background: #e53e3e;
+            color: #fff;
+            border: none;
+            padding: 8px 12px;
+            border-radius: 8px;
+            cursor: pointer;
+            z-index: 1001;
+        }
+        @media (max-width: 768px) {
+            .sidebar {
+                transform: translateX(-250px);
+            }
+            .sidebar.active {
+                transform: translateX(0);
+            }
+            .main-content {
+                margin-left: 0;
+            }
+            .toggle-btn {
+                display: block;
+            }
+            .nav-links {
+                display: none;
+            }
+        }
+    </style>
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;500;600&family=Fira+Code&display=swap" rel="stylesheet">
+</head>
+<body>
+    <!-- Navbar -->
+    <div class="navbar">
+        <h1>Computer Science Viva Prep</h1>
+        <div class="nav-links">
+            <a href="#semester1" onclick="scrollToSection('semester1')">Semester I</a>
+            <a href="#semester2" onclick="scrollToSection('semester2')">Semester II</a>
+            <a href="#practical" onclick="scrollToSection('practical')">Practical</a>
+            <a href="#generate-questions" onclick="scrollToSection('generate-questions')">Generate</a>
+        </div>
+    </div>
+
+    <!-- Sidebar -->
+    <div class="sidebar" id="sidebar">
+        <a href="#semester1" onclick="scrollToSection('semester1')">Semester I</a>
+        <a href="#semester2" onclick="scrollToSection('semester2')">Semester II</a>
+        <a href="#practical" onclick="scrollToSection('practical')">Practical Prep</a>
+        <a href="#generate-questions" onclick="scrollToSection('generate-questions')">Generate Questions</a>
+    </div>
+
+    <!-- Toggle Button -->
+    <button class="toggle-btn" onclick="toggleSidebar()">☰</button>
+
+    <!-- Main Content -->
+    <div class="main-content">
+        <div class="section">
+            <h2>Welcome to Your Viva Preparation</h2>
+            <p>Prepare for your Class XI Computer Science viva with 100 SAQs covering Semesters I and II. Navigate using the sidebar or links above. Click "Generate Questions" to get new ones!</p>
+            <p><em>West Bengal Council of Higher Secondary Education | Date: March 25, 2025</em></p>
+        </div>
+
+        <!-- Semester I -->
+        <div id="semester1" class="section">
+            <h2>Semester I: Theoretical Preparation</h2>
+            <h3>Computer System and Organisation</h3>
+            <div class="saq"><strong>Q1: What is the role of the CPU in a computer system?</strong><br>A: Executes instructions by fetch, decode, execute cycles.</div>
+            <div class="saq"><strong>Q2: What is the difference between primary and secondary memory?</strong><br>A: Primary (e.g., RAM) is fast, volatile; secondary (e.g., HDD) is slow, non-volatile.</div>
+            <div class="saq"><strong>Q3: Explain the difference between GUI and CUI with examples.</strong><br>A: GUI (e.g., Windows) uses visuals; CUI (e.g., Linux terminal) uses text.</div>
+            <div class="saq"><strong>Q4: Convert the decimal number 25 to binary.</strong><br>A: 11001.</div>
+            <div class="saq"><strong>Q5: What is a NOT gate? Draw its truth table.</strong><br>A: Inverts input; 0→1, 1→0.</div>
+            <div class="saq"><strong>Q6: What are the functions of an operating system?</strong><br>A: Manages hardware, UI, files, tasks.</div>
+            <div class="saq"><strong>Q7: What is cache memory, and why is it used?</strong><br>A: Fast memory between CPU and RAM for frequent data, reduces access time.</div>
+            <div class="saq"><strong>Q8: What is the difference between a compiler and an interpreter?</strong><br>A: Compiler translates all at once; interpreter line-by-line.</div>
+            <div class="saq"><strong>Q9: What are the units of memory in ascending order?</strong><br>A: Bit, Byte, KB, MB, GB, TB, PB.</div>
+            <div class="saq"><strong>Q10: Convert the hexadecimal number 1A to binary.</strong><br>A: 00011010.</div>
+            <div class="saq"><strong>Q11: What is the purpose of De Morgan’s theorem?</strong><br>A: Simplifies logic, e.g., !(A AND B) = !A OR !B.</div>
+            <div class="saq"><strong>Q12: What is the difference between supercomputers and mainframes?</strong><br>A: Supercomputers for speed; mainframes for reliability.</div>
+
+            <h3>Programming Fundamentals</h3>
+            <div class="saq"><strong>Q13: Define an algorithm and list two characteristics.</strong><br>A: Step-by-step procedure; finiteness, precision.</div>
+            <div class="saq"><strong>Q14: What is the difference between high-level and low-level languages?</strong><br>A: High-level (e.g., C) readable; low-level (e.g., assembly) machine-specific.</div>
+            <div class="saq"><strong>Q15: What is time complexity in algorithms?</strong><br>A: Time as a function of input size, e.g., Big O.</div>
+            <div class="saq"><strong>Q16: What is structured programming? Give an example.</strong><br>A: Uses control structures; e.g., `if-else` in C.</div>
+            <div class="saq"><strong>Q17: Explain the purpose of a flowchart.</strong><br>A: Visually represents algorithm steps.</div>
+            <div class="saq"><strong>Q18: What is pseudocode, and why is it useful?</strong><br>A: High-level algorithm description; aids planning.</div>
+            <div class="saq"><strong>Q19: What is the difference between procedural and object-oriented programming?</strong><br>A: Procedural (e.g., C) procedure-based; OOP (e.g., Java) object-based.</div>
+            <div class="saq"><strong>Q20: What does Big O notation represent?</strong><br>A: Upper bound of time complexity.</div>
+            <div class="saq"><strong>Q21: What is a recursive algorithm? Give an example.</strong><br>A: Calls itself; e.g., Fibonacci.</div>
+            <div class="saq"><strong>Q22: How does debugging improve a program?</strong><br>A: Fixes errors for correct execution.</div>
+
+            <h3>Introduction to C</h3>
+            <div class="saq"><strong>Q23: What is the purpose of the `printf` function?</strong><br>A: Displays formatted output, e.g., `printf("%d", x);`.</div>
+            <div class="saq"><strong>Q24: What is the difference between `while` and `do-while` loops?</strong><br>A: `while` checks first; `do-while` executes once then checks.</div>
+            <div class="saq"><strong>Q25: Write a C statement to declare a 2D array of size 3x4.</strong><br>A: `int arr[3][4];`</div>
+            <div class="saq"><strong>Q26: What is recursion in C? Give an example.</strong><br>A: Function calls itself; e.g., `fact(n) = n * fact(n-1)`.</div>
+            <div class="saq"><strong>Q27: What is a pointer in C? How do you declare one?</strong><br>A: Stores address; `int *ptr;`.</div>
+            <div class="saq"><strong>Q28: Write a C snippet to swap two numbers using pointers.</strong><br>A: `void swap(int *a, int *b) { int temp = *a; *a = *b; *b = temp; }`.</div>
+            <div class="saq"><strong>Q29: What is the difference between `&` and `*` operators?</strong><br>A: `&` gets address; `*` dereferences.</div>
+            <div class="saq"><strong>Q30: How do you concatenate two strings without `strcat`?</strong><br>A: Copy characters manually.</div>
+            <div class="saq"><strong>Q31: What is the purpose of the `return` statement?</strong><br>A: Sends value back, exits function.</div>
+            <div class="saq"><strong>Q32: What is the role of `#include`?</strong><br>A: Imports header files, e.g., `stdio.h`.</div>
+            <div class="saq"><strong>Q33: What is the difference between `for` and `while` loops?</strong><br>A: `for` for known iterations; `while` for condition-based.</div>
+            <div class="saq"><strong>Q34: Write a C statement to declare a structure for a student.</strong><br>A: `struct student { char name[20]; int age; };`.</div>
+            <div class="saq"><strong>Q35: What is the significance of `void` in a function?</strong><br>A: No return value.</div>
+            <div class="saq"><strong>Q36: How do you pass an array to a function?</strong><br>A: Pass array name, e.g., `int arr[]`.</div>
+            <div class="saq"><strong>Q37: Write a C snippet to find string length without `strlen`.</strong><br>A: `int len = 0; while (str[len] != '\0') len++;`.</div>
+            <div class="saq"><strong>Q38: What is the difference between pre- and post-increment?</strong><br>A: Pre (`++i`) increments first; post (`i++`) uses then increments.</div>
+            <div class="saq"><strong>Q39: What is a nested function call? Give an example.</strong><br>A: Function in a function call; e.g., `printf("%d", add(2, 3));`.</div>
+            <div class="saq"><strong>Q40: What is the purpose of `scanf`?</strong><br>A: Reads formatted input, e.g., `scanf("%d", &x);`.</div>
+        </div>
+
+        <!-- Semester II -->
+        <div id="semester2" class="section">
+            <h2>Semester II: Theoretical Preparation</h2>
+            <h3>Data Structure</h3>
+            <div class="saq"><strong>Q41: What is a data structure? Name two types.</strong><br>A: Organizes data; linear (array), non-linear (tree).</div>
+            <div class="saq"><strong>Q42: What is the difference between an array and a linked list?</strong><br>A: Array fixed, contiguous; linked list dynamic, non-contiguous.</div>
+            <div class="saq"><strong>Q43: Explain the push operation in a stack.</strong><br>A: Adds element to top, increments pointer.</div>
+            <div class="saq"><strong>Q44: What is a queue? How does it differ from a stack?</strong><br>A: FIFO; stack is LIFO.</div>
+            <div class="saq"><strong>Q45: Write a pseudocode for linear search.</strong><br>A: `for i = 0 to n-1: if array[i] == key: return i; return -1;`.</div>
+            <div class="saq"><strong>Q46: What is bubble sort? Why is it called so?</strong><br>A: Swaps adjacent elements; smaller "bubble" to top.</div>
+            <div class="saq"><strong>Q47: What is the advantage of a circular linked list?</strong><br>A: Continuous traversal from any node.</div>
+            <div class="saq"><strong>Q48: What is tail recursion? Give an example.</strong><br>A: Last operation is recursive; e.g., `print(n-1)` last.</div>
+            <div class="saq"><strong>Q49: How do you implement a queue using an array?</strong><br>A: Use `front` and `rear` pointers.</div>
+            <div class="saq"><strong>Q50: What is the time complexity of binary search?</strong><br>A: O(log n).</div>
+            <div class="saq"><strong>Q51: What is an abstract data type (ADT)?</strong><br>A: Defines data/operations, e.g., stack.</div>
+            <div class="saq"><strong>Q52: What is the difference between singly and doubly linked lists?</strong><br>A: Singly one pointer; doubly two.</div>
+            <div class="saq"><strong>Q53: Explain the pop operation in a stack.</strong><br>A: Removes top element, decrements pointer.</div>
+            <div class="saq"><strong>Q54: What is a circular queue? How does it improve?</strong><br>A: Wraps around; reuses space.</div>
+            <div class="saq"><strong>Q55: Write a pseudocode for bubble sort.</strong><br>A: `for i = 0 to n-1: for j = 0 to n-i-1: if arr[j] > arr[j+1]: swap;`.</div>
+            <div class="saq"><strong>Q56: What is the worst-case time complexity of linear search?</strong><br>A: O(n).</div>
+            <div class="saq"><strong>Q57: What is the advantage of recursion over iteration?</strong><br>A: Simplifies code for complex problems.</div>
+            <div class="saq"><strong>Q58: How do you detect an empty stack?</strong><br>A: Top is -1 or NULL.</div>
+            <div class="saq"><strong>Q59: What is a priority queue? Give a use case.</strong><br>A: Prioritizes elements; e.g., task scheduling.</div>
+            <div class="saq"><strong>Q60: What is the difference between static and dynamic data structures?</strong><br>A: Static fixed; dynamic resizable.</div>
+
+            <h3>Computer Networks</h3>
+            <div class="saq"><strong>Q61: What is the difference between LAN and WAN?</strong><br>A: LAN small, fast; WAN large, slower.</div>
+            <div class="saq"><strong>Q62: What is a protocol in networking? Give an example.</strong><br>A: Rules for communication; e.g., HTTP.</div>
+            <div class="saq"><strong>Q63: Explain the role of a router.</strong><br>A: Directs data packets between networks.</div>
+            <div class="saq"><strong>Q64: What is the difference between simplex and duplex?</strong><br>A: Simplex one-way; duplex two-way.</div>
+            <div class="saq"><strong>Q65: What is the purpose of the OSI model?</strong><br>A: Standardizes network communication.</div>
+            <div class="saq"><strong>Q66: Name the OSI layer for routing.</strong><br>A: Network layer.</div>
+            <div class="saq"><strong>Q67: What is an IP address?</strong><br>A: Unique device identifier, e.g., 192.168.1.1.</div>
+            <div class="saq"><strong>Q68: What is the difference between a hub and a switch?</strong><br>A: Hub broadcasts; switch targets.</div>
+            <div class="saq"><strong>Q69: What is bandwidth in networking?</strong><br>A: Max data transfer rate (bps).</div>
+            <div class="saq"><strong>Q70: What is the difference between TCP and UDP?</strong><br>A: TCP reliable; UDP faster.</div>
+            <div class="saq"><strong>Q71: What is the role of a modem?</strong><br>A: Converts digital to analog signals.</div>
+            <div class="saq"><strong>Q72: What is a star topology? Advantage?</strong><br>A: Central hub; easy troubleshooting.</div>
+            <div class="saq"><strong>Q73: What does HTTP do?</strong><br>A: Transfers web pages.</div>
+            <div class="saq"><strong>Q74: Name the OSI layer for error detection.</strong><br>A: Data Link layer.</div>
+            <div class="saq"><strong>Q75: What is a URL? Example?</strong><br>A: Web address; e.g., `https://example.com`.</div>
+            <div class="saq"><strong>Q76: What is the difference between a repeater and a router?</strong><br>A: Repeater amplifies; router directs.</div>
+
+            <h3>Ethics</h3>
+            <div class="saq"><strong>Q77: What is phishing? How to prevent it?</strong><br>A: Tricks for data; verify sources.</div>
+            <div class="saq"><strong>Q78: What is intellectual property rights (IPR)? Example?</strong><br>A: Protects creations; e.g., copyright.</div>
+            <div class="saq"><strong>Q79: What is e-waste? Why manage it?</strong><br>A: Discarded electronics; prevents harm.</div>
+            <div class="saq"><strong>Q80: What is the difference between open-source and proprietary software?</strong><br>A: Open-source free, modifiable; proprietary closed.</div>
+            <div class="saq"><strong>Q81: What is ransomware? Effect?</strong><br>A: Encrypts data, locks access.</div>
+            <div class="saq"><strong>Q82: What is plagiarism in software?</strong><br>A: Copying code without credit.</div>
+            <div class="saq"><strong>Q83: What is the purpose of the IT Act?</strong><br>A: Regulates cyber activities.</div>
+            <div class="saq"><strong>Q84: What is a digital footprint? Why manage?</strong><br>A: Online trace; protects privacy.</div>
+        </div>
+
+        <!-- Practical Preparation -->
+        <div id="practical" class="section">
+            <h2>Practical Preparation</h2>
+            <div class="saq"><strong>Q85: What does the `ls` command do in Linux?</strong><br>A: Lists directory contents.</div>
+            <div class="saq"><strong>Q86: Write a C program to check if a number is prime.</strong><br>A: <pre>#include <stdio.h>
+int main() {
+    int n, i, flag = 0;
+    printf("Enter a number: ");
+    scanf("%d", &n);
+    for (i = 2; i <= n / 2; i++) {
+        if (n % i == 0) { flag = 1; break; }
+    }
+    if (flag == 0 && n > 1) printf("%d is prime\n", n);
+    else printf("%d is not prime\n", n);
+    return 0;
+}</pre></div>
+            <div class="saq"><strong>Q87: What is the purpose of the `mkdir` command?</strong><br>A: Creates a new directory.</div>
+            <div class="saq"><strong>Q88: Write a C function for factorial using recursion.</strong><br>A: <pre>int fact(int n) {
+    if (n == 0) return 1;
+    return n * fact(n - 1);
+}</pre></div>
+            <div class="saq"><strong>Q89: What does the `cat` command do?</strong><br>A: Displays file contents.</div>
+            <div class="saq"><strong>Q90: Write a C snippet to reverse a string using pointers.</strong><br>A: <pre>void reverse(char *str) {
+    char *end = str;
+    while (*end) end++;
+    end--;
+    while (str < end) {
+        char temp = *str; *str++ = *end; *end-- = temp;
+    }
+}</pre></div>
+            <div class="saq"><strong>Q91: What does the `mv` command do?</strong><br>A: Moves/renames files.</div>
+            <div class="saq"><strong>Q92: Write a C snippet for sum of first n numbers.</strong><br>A: <pre>int sum = 0;
+for (int i = 1; i <= n; i++) sum += i;
+printf("Sum: %d\n", sum);</pre></div>
+            <div class="saq"><strong>Q93: What is the purpose of `rmdir`?</strong><br>A: Removes empty directories.</div>
+            <div class="saq"><strong>Q94: Write a C function to check palindrome.</strong><br>A: <pre>int isPalindrome(char *str) {
+    char *end = str;
+    while (*end) end++;
+    end--;
+    while (str < end) if (*str++ != *end--) return 0;
+    return 1;
+}</pre></div>
+            <div class="saq"><strong>Q95: What does the `who` command do?</strong><br>A: Shows logged-in users.</div>
+            <div class="saq"><strong>Q96: Write a C snippet to find max in array.</strong><br>A: <pre>int max = arr[0];
+for (int i = 1; i < n; i++) if (arr[i] > max) max = arr[i];</pre></div>
+        </div>
+
+        <!-- Generate Questions -->
+        <div id="generate-questions" class="section">
+            <h2>Generate New Questions</h2>
+            <p>Click below to get new questions generated dynamically!</p>
+            <button id="generate-btn">Generate Questions</button>
+            <div id="new-questions"></div>
+        </div>
+
+        <!-- Summary Table -->
+        <div id="summary" class="section">
+            <h2>Summary Table of All SAQs</h2>
+            <table>
+                <tr><th>Unit</th><th>Question</th><th>Answer</th></tr>
+                <tr><td rowspan="12">Computer System</td><td>Q1: Role of CPU?</td><td>Executes instructions.</td></tr>
+                <tr><td>Q2: Primary vs secondary memory?</td><td>Primary fast, volatile; secondary slow, permanent.</td></tr>
+                <tr><td>Q3: GUI vs CUI?</td><td>GUI visuals; CUI text.</td></tr>
+                <tr><td>Q4: Decimal 25 to binary?</td><td>11001.</td></tr>
+                <tr><td>Q5: NOT gate?</td><td>Inverts; 0→1, 1→0.</td></tr>
+                <tr><td>Q6: OS functions?</td><td>Manages hardware, UI.</td></tr>
+                <tr><td>Q7: Cache memory?</td><td>Fast, reduces access time.</td></tr>
+                <tr><td>Q8: Compiler vs interpreter?</td><td>All vs line-by-line.</td></tr>
+                <tr><td>Q9: Memory units?</td><td>Bit, Byte, KB, MB, GB, TB, PB.</td></tr>
+                <tr><td>Q10: Hex 1A to binary?</td><td>00011010.</td></tr>
+                <tr><td>Q11: De Morgan’s?</td><td>Simplifies logic.</td></tr>
+                <tr><td>Q12: Super vs mainframe?</td><td>Speed vs reliability.</td></tr>
+                <tr><td rowspan="10">Programming</td><td>Q13: Algorithm?</td><td>Step-by-step; finite, precise.</td></tr>
+                <tr><td>Q14: High vs low-level?</td><td>Readable vs machine-specific.</td></tr>
+                <tr><td>Q15: Time complexity?</td><td>Time vs input size.</td></tr>
+                <tr><td>Q16: Structured programming?</td><td>Control structures.</td></tr>
+                <tr><td>Q17: Flowchart?</td><td>Visual algorithm.</td></tr>
+                <tr><td>Q18: Pseudocode?</td><td>Planning aid.</td></tr>
+                <tr><td>Q19: Procedural vs OOP?</td><td>Procedures vs objects.</td></tr>
+                <tr><td>Q20: Big O?</td><td>Upper bound.</td></tr>
+                <tr><td>Q21: Recursive algorithm?</td><td>Self-calling.</td></tr>
+                <tr><td>Q22: Debugging?</td><td>Fixes errors.</td></tr>
+                <tr><td rowspan="18">C Programming</td><td>Q23: `printf`?</td><td>Formatted output.</td></tr>
+                <tr><td>Q24: `while` vs `do-while`?</td><td>Check first vs once then check.</td></tr>
+                <tr><td>Q25: 2D array?</td><td>`int arr[3][4];`.</td></tr>
+                <tr><td>Q26: Recursion?</td><td>Self-call; e.g., factorial.</td></tr>
+                <tr><td>Q27: Pointer?</td><td>Stores address.</td></tr>
+                <tr><td>Q28: Swap with pointers?</td><td>Uses `*` to swap.</td></tr>
+                <tr><td>Q29: `&` vs `*`?</td><td>Address vs dereference.</td></tr>
+                <tr><td>Q30: Concatenate strings?</td><td>Manual copy.</td></tr>
+                <tr><td>Q31: `return`?</td><td>Sends value, exits.</td></tr>
+                <tr><td>Q32: `#include`?</td><td>Imports headers.</td></tr>
+                <tr><td>Q33: `for` vs `while`?</td><td>Known vs condition.</td></tr>
+                <tr><td>Q34: Structure?</td><td>`struct student { ... };`.</td></tr>
+                <tr><td>Q35: `void`?</td><td>No return.</td></tr>
+                <tr><td>Q36: Pass array?</td><td>Array name.</td></tr>
+                <tr><td>Q37: String length?</td><td>Loop to `\0`.</td></tr>
+                <tr><td>Q38: Pre vs post-increment?</td><td>First vs after.</td></tr>
+                <tr><td>Q39: Nested call?</td><td>Function in call.</td></tr>
+                <tr><td>Q40: `scanf`?</td><td>Reads input.</td></tr>
+                <tr><td rowspan="20">Data Structure</td><td>Q41: Data structure?</td><td>Organizes data.</td></tr>
+                <tr><td>Q42: Array vs linked list?</td><td>Fixed vs dynamic.</td></tr>
+                <tr><td>Q43: Push in stack?</td><td>Adds to top.</td></tr>
+                <tr><td>Q44: Queue vs stack?</td><td>FIFO vs LIFO.</td></tr>
+                <tr><td>Q45: Linear search?</td><td>Checks each.</td></tr>
+                <tr><td>Q46: Bubble sort?</td><td>Swaps, bubbles up.</td></tr>
+                <tr><td>Q47: Circular linked list?</td><td>Continuous.</td></tr>
+                <tr><td>Q48: Tail recursion?</td><td>Last call.</td></tr>
+                <tr><td>Q49: Queue with array?</td><td>`front`, `rear`.</td></tr>
+                <tr><td>Q50: Binary search?</td><td>O(log n).</td></tr>
+                <tr><td>Q51: ADT?</td><td>Data/operations.</td></tr>
+                <tr><td>Q52: Singly vs doubly?</td><td>One vs two pointers.</td></tr>
+                <tr><td>Q53: Pop in stack?</td><td>Removes top.</td></tr>
+                <tr><td>Q54: Circular queue?</td><td>Reuses space.</td></tr>
+                <tr><td>Q55: Bubble sort pseudocode?</td><td>Swap adjacent.</td></tr>
+                <tr><td>Q56: Linear search worst?</td><td>O(n).</td></tr>
+                <tr><td>Q57: Recursion vs iteration?</td><td>Simpler code.</td></tr>
+                <tr><td>Q58: Empty stack?</td><td>Top -1/NULL.</td></tr>
+                <tr><td>Q59: Priority queue?</td><td>Prioritizes; scheduling.</td></tr>
+                <tr><td>Q60: Static vs dynamic?</td><td>Fixed vs resizable.</td></tr>
+                <tr><td rowspan="16">Networks</td><td>Q61: LAN vs WAN?</td><td>Small vs large.</td></tr>
+                <tr><td>Q62: Protocol?</td><td>Rules; e.g., HTTP.</td></tr>
+                <tr><td>Q63: Router?</td><td>Directs packets.</td></tr>
+                <tr><td>Q64: Simplex vs duplex?</td><td>One vs two-way.</td></tr>
+                <tr><td>Q65: OSI model?</td><td>Standardizes.</td></tr>
+                <tr><td>Q66: Routing layer?</td><td>Network.</td></tr>
+                <tr><td>Q67: IP address?</td><td>Device ID.</td></tr>
+                <tr><td>Q68: Hub vs switch?</td><td>Broadcast vs target.</td></tr>
+                <tr><td>Q69: Bandwidth?</td><td>Max rate.</td></tr>
+                <tr><td>Q70: TCP vs UDP?</td><td>Reliable vs fast.</td></tr>
+                <tr><td>Q71: Modem?</td><td>Digital to analog.</td></tr>
+                <tr><td>Q72: Star topology?</td><td>Central hub.</td></tr>
+                <tr><td>Q73: HTTP?</td><td>Web transfer.</td></tr>
+                <tr><td>Q74: Error detection layer?</td><td>Data Link.</td></tr>
+                <tr><td>Q75: URL?</td><td>Web address.</td></tr>
+                <tr><td>Q76: Repeater vs router?</td><td>Amplifies vs directs.</td></tr>
+                <tr><td rowspan="8">Ethics</td><td>Q77: Phishing?</td><td>Tricks; verify sources.</td></tr>
+                <tr><td>Q78: IPR?</td><td>Protects; e.g., copyright.</td></tr>
+                <tr><td>Q79: E-waste?</td><td>Electronics; prevents harm.</td></tr>
+                <tr><td>Q80: Open-source vs proprietary?</td><td>Free vs closed.</td></tr>
+                <tr><td>Q81: Ransomware?</td><td>Encrypts, locks.</td></tr>
+                <tr><td>Q82: Plagiarism?</td><td>Copying code.</td></tr>
+                <tr><td>Q83: IT Act?</td><td>Regulates cyber.</td></tr>
+                <tr><td>Q84: Digital footprint?</td><td>Online trace.</td></tr>
+                <tr><td rowspan="12">Practical</td><td>Q85: `ls`?</td><td>Lists contents.</td></tr>
+                <tr><td>Q86: Prime check?</td><td>Loops to n/2.</td></tr>
+                <tr><td>Q87: `mkdir`?</td><td>Creates directory.</td></tr>
+                <tr><td>Q88: Factorial?</td><td>Recursive.</td></tr>
+                <tr><td>Q89: `cat`?</td><td>Shows file.</td></tr>
+                <tr><td>Q90: Reverse string?</td><td>Pointers swap.</td></tr>
+                <tr><td>Q91: `mv`?</td><td>Moves/renames.</td></tr>
+                <tr><td>Q92: Sum n numbers?</td><td>Loop sum.</td></tr>
+                <tr><td>Q93: `rmdir`?</td><td>Removes empty.</td></tr>
+                <tr><td>Q94: Palindrome?</td><td>Compare ends.</td></tr>
+                <tr><td>Q95: `who`?</td><td>Logged-in users.</td></tr>
+                <tr><td>Q96: Max in array?</td><td>Compare each.</td></tr>
+            </table>
+        </div>
+    </div>
+
+    <script>
+        // Sidebar Toggle
+        function toggleSidebar() {
+            const sidebar = document.getElementById('sidebar');
+            sidebar.classList.toggle('active');
+        }
+
+        // Smooth Scroll
+        function scrollToSection(sectionId) {
+            document.querySelectorAll('.sidebar a, .nav-links a').forEach(a => a.classList.remove('active'));
+            document.querySelectorAll(`a[href="#${sectionId}"]`).forEach(a => a.classList.add('active'));
+            document.getElementById(sectionId).scrollIntoView({ behavior: 'smooth' });
+        }
+
+        // Generate New Questions
+        const questionsPool = [
+            { q: "What is the difference between volatile and non-volatile memory?", a: "Volatile loses data without power (e.g., RAM); non-volatile retains (e.g., ROM)." },
+            { q: "How do you declare a constant in C?", a: "Use `const`, e.g., `const int x = 10;`." },
+            { q: "What is a dequeue?", a: "Double-ended queue; allows insertion/deletion at both ends." },
+            { q: "What is HTTPS?", a: "Secure HTTP using encryption (SSL/TLS)." },
+            { q: "What is cyberbullying?", a: "Harassment using digital means." },
+            { q: "Write a C snippet to print odd numbers from 1 to 10.", a: "for (int i = 1; i <= 10; i += 2) printf(\"%d\\n\", i);" },
+            { q: "What does `cp` do in Linux?", a: "Copies files/directories." }
+        ];
+
+        document.getElementById('generate-btn').addEventListener('click', () => {
+            const newQuestionsDiv = document.getElementById('new-questions');
+            newQuestionsDiv.innerHTML = '';
+            const numQuestions = Math.min(3, questionsPool.length); // Generate up to 3
+            for (let i = 0; i < numQuestions; i++) {
+                const randomIdx = Math.floor(Math.random() * questionsPool.length);
+                const { q, a } = questionsPool[randomIdx];
+                newQuestionsDiv.innerHTML += `<div class="saq"><strong>Q${97+i}: ${q}</strong><br>A: ${a}</div>`;
+            }
+        });
+    </script>
+</body>
+</html>
